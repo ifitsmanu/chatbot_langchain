@@ -1,0 +1,4 @@
+.env
+src/python/
+__pycache__/
+test2.html

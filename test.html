@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple JavaScript Client</title>
+    <script>
+        async function fetchData() {
+            const url = "https://bbnwik5ckjsaq6bsw7qz5lwurm0fwuyu.lambda-url.us-east-1.on.aws/";
+            const requestBody = {
+                question: document.getElementById("prompt").value,
+                session_id: "test-html",
+                num_recent_conversations: 10,
+                summary_token_limit: 200,
+                temparature: 0.5,
+
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById("result").innerText = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <label for="prompt">Enter your prompt:</label>
+    <input type="text" id="prompt" name="prompt"><br>
+    <button onclick="fetchData()">Get Answer</button>
+    <pre id="result"></pre>
+</body>
+</html>
